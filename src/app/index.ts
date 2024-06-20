@@ -1,1 +1,2 @@
-export * from './folders.use-case';
+export * from './get-root-folder.use-case';
+export * from './get-folder-by-id.use-case';
