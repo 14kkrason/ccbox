@@ -1,7 +1,7 @@
-import { FoldersUseCase } from '@app';
-import { AppModule } from '@app/app.module';
-import { FoldersRepositoryModule } from '@infrastructure/folders-repository';
-import { KnexModule } from '@infrastructure/knex';
+import { GetRootFolderUseCase } from '@app';
+import { AppModule } from '@/app/app.module';
+import { FoldersRepositoryModule } from '@/infrastructure/folders-repository';
+import { KnexModule } from '@/infrastructure/knex';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiModule } from './presentation/api/api.module';
@@ -22,14 +22,14 @@ import { ApiModule } from './presentation/api/api.module';
             port: configService.get('DB_PORT'),
             user: configService.get('DB_USER'),
             password: configService.get('DB_PASSWORD'),
-            database: configService.get('DB_NAME')
-          }
+            database: configService.get('DB_NAME'),
+          },
         };
       },
     }),
-    FoldersRepositoryModule.forRoot({type: 'postgres'})
+    FoldersRepositoryModule.forRoot({ type: 'postgres' }),
   ],
-  providers: [FoldersUseCase],
-  exports: [FoldersUseCase]
+  providers: [GetRootFolderUseCase],
+  exports: [GetRootFolderUseCase],
 })
 export class MainModule {}

@@ -7,6 +7,6 @@ CREATE TABLE core.folder (
   id integer PRIMARY KEY,
   parent_folder_id integer,
   name text,
-  owner_id integer,
+  owner_id integer NOT NULL,
   UNIQUE(parent_folder_id, name)
 );

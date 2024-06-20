@@ -8,7 +8,7 @@ export class KnexService {
 
   constructor(@Inject(MODULE_OPTIONS_TOKEN) private config: Knex.Config) {}
 
-  public get connection() {
+  public get connection(): Knex {
     if (!this._connection) {
       this._connection = knex(this.config);
 

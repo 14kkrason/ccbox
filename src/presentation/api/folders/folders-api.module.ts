@@ -1,5 +1,8 @@
-import { DynamicModule } from "@nestjs/common";
-import { FoldersController, FoldersApiService } from "@presentation/api/folders";
+import { DynamicModule } from '@nestjs/common';
+import {
+  FoldersController,
+  FoldersApiService,
+} from '@presentation/api/folders';
 
 export class FoldersApiModule {
   public static forRoot(): DynamicModule {
@@ -8,7 +11,7 @@ export class FoldersApiModule {
       module: FoldersApiModule,
       controllers: [FoldersController],
       providers: [FoldersApiService],
-      exports: [FoldersApiService]
-    }
+      exports: [FoldersApiService],
+    };
   }
 }

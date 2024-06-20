@@ -3,6 +3,6 @@ import { Knex } from 'knex';
 
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
   new ConfigurableModuleBuilder<Knex.Config>()
-  .setClassMethodName('forRoot')
-  .setExtras({ global: true })
-  .build();
+    .setClassMethodName('forRoot')
+    .setExtras({ global: true })
+    .build();
