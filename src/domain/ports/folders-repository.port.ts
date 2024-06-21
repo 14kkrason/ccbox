@@ -6,4 +6,9 @@ export interface FoldersRepositoryPort {
     ownerId: number,
   ): Promise<FolderEntity | null>;
   findById(id: number, ownerId: number): Promise<FolderEntity | null>;
+  createFolder(
+    name: string | null,
+    parentId: number | null,
+    ownerId: number,
+  ): Promise<number>;
 }

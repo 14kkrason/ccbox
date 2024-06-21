@@ -8,7 +8,7 @@ import {
   REQUESTED_OWNER_ID,
   ROOT_FOLDER_ID,
   setupCoreFolder,
-  teardownCoreFolder,
+  teardownChangesToCoreFolder,
 } from '../fixtures/core-folders.fixture';
 import { setupPostgresContainer } from '../fixtures/pg-setup.fixture';
 import { FoldersRepositoryModule } from '@/infrastructure/folders-repository';
@@ -49,11 +49,11 @@ describe('GetFolderById (db integration)', () => {
     knexService = app.get<KnexService>(KnexService);
 
     await app.init();
+    await setupCoreFolder(knexService.connection);
   });
 
   beforeEach(async () => {
-    await teardownCoreFolder(knexService.connection);
-    await setupCoreFolder(knexService.connection);
+    await teardownChangesToCoreFolder(knexService.connection);
   });
 
   afterAll(async () => {

@@ -13,6 +13,24 @@ type FoldersPostgresModelJoined = FoldersPostgresModel & {
 export class FoldersPostgresRepository implements FoldersRepositoryPort {
   constructor(private readonly knexService: KnexService) {}
 
+  public async createFolder(
+    name: string | null,
+    parentId: number | null,
+    ownerId: number,
+  ): Promise<number> {
+    const client = this.knexService.connection('core.folder');
+
+    const response = client
+      .insert<FoldersPostgresModel>({
+        name,
+        owner_id: ownerId,
+        parent_folder_id: parentId,
+      })
+      .returning<{ id: number }[]>('id');
+
+    return response.then((data) => data[0].id);
+  }
+
   public async findById(
     id: number,
     ownerId: number,

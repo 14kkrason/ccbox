@@ -4,7 +4,7 @@
 CREATE SCHEMA core;
 
 CREATE TABLE core.folder (
-  id integer PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   parent_folder_id integer,
   name text,
   owner_id integer NOT NULL,

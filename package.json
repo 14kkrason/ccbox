@@ -21,6 +21,7 @@
     "docker:teardown": "docker compose --project-directory=docker down --volumes"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.0.0",
@@ -34,6 +35,7 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
+    "@testcontainers/localstack": "^10.9.0",
     "@testcontainers/postgresql": "^10.9.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
@@ -60,7 +62,10 @@
       "json",
       "ts"
     ],
-    "roots": ["src", "test"],
+    "roots": [
+      "src",
+      "test"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -70,7 +75,9 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
-    "moduleDirectories": ["node_modules"],
+    "moduleDirectories": [
+      "node_modules"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     }
