@@ -5,8 +5,10 @@ export const REQUESTED_OWNER_ID = 1;
 export const ROOT_FOLDER_ID = 1;
 export const DEPENDANT_FOLDER_WITH_CHILDREN_ID = 2;
 
-export const teardownCoreFolder = async (client: Knex): Promise<void> => {
-  await client('core.folder').delete();
+export const teardownChangesToCoreFolder = async (
+  client: Knex,
+): Promise<void> => {
+  await client('core.folder').delete().whereNotIn('id', [1, 2, 3, 4]);
 };
 
 export const setupCoreFolder = async (
@@ -14,7 +16,7 @@ export const setupCoreFolder = async (
   rows: FoldersPostgresModel[] = defaultRows,
 ): Promise<void> => {
   const insert = (row: FoldersPostgresModel): string =>
-    `INSERT INTO core.folder VALUES (${row.id}, ${row.parent_folder_id}, ${row.name}, ${row.owner_id});`;
+    `INSERT INTO core.folder (parent_folder_id, name, owner_id) VALUES ( ${row.parent_folder_id}, ${row.name}, ${row.owner_id});`;
 
   for (const row of rows) {
     await client.raw(insert(row));

@@ -13,7 +13,7 @@ export class FolderEntity extends Entity<FolderProps> {
     super(props);
   }
 
-  public canCreateFolder(name: string): boolean {
+  public canCreateFolder(name: string | null): boolean {
     return this.props.folders.findIndex((folder) => folder.name === name) < 0;
   }
 

@@ -1,7 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FoldersApiService } from './folders-api.service';
 import { ApiResponse } from '../common/api.interface';
 import { FolderProps } from '@domain';
+import { CreateFolderDto } from './dtos/create-folder.dto';
 
 @Controller('/api/folders')
 export class FoldersController {
@@ -20,5 +21,14 @@ export class FoldersController {
     const ownerId = 1;
 
     return this.foldersApiService.getFolderById(id, ownerId);
+  }
+
+  @Post()
+  async createFolder(
+    @Body() body: CreateFolderDto,
+  ): Promise<ApiResponse<number>> {
+    const ownerId = 1;
+
+    return this.foldersApiService.createFolder(body, ownerId);
   }
 }
