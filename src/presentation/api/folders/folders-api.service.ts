@@ -1,18 +1,17 @@
-import { GetFolderByIdUseCase, GetRootFolderUseCase } from '@app';
-import { FolderProps } from '@domain';
 import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
-import { ApiResponse } from '../common/api.interface';
+  GetFolderByIdUseCase,
+  GetRootFolderUseCase,
+  CreateFolderUseCase,
+} from '@/app';
+import { FolderProps } from '@/domain';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ApiResponse } from '../common/interfaces/api.interface';
 import { CreateFolderDto } from './dtos/create-folder.dto';
-import { CreateFolderUseCase } from '@app/create-folder.use-case';
-import { FolderDoesNotExistError } from '@domain/errors/folder-does-not-exist.error';
-import { DuplicateFolderError } from '@domain/errors/duplicate-folder.error';
 
 @Injectable()
 export class FoldersApiService {
+  private readonly logger = new Logger(FoldersApiService.name);
+
   constructor(
     private readonly getRootFolderUseCase: GetRootFolderUseCase,
     private readonly getFolderByIdUseCase: GetFolderByIdUseCase,
@@ -54,28 +53,19 @@ export class FoldersApiService {
     dto: CreateFolderDto,
     ownerId: number,
   ): Promise<ApiResponse<number>> {
-    try {
-      const data = await this.createFolderUseCase.handle(
-        dto.name,
-        dto.parentId,
-        ownerId,
-      );
+    const data = await this.createFolderUseCase.handle(
+      dto.name,
+      dto.parentId,
+      ownerId,
+    );
 
-      return {
-        data,
-        success: true,
-      };
-    } catch (error) {
-      // TODO: create interceptors that map instances of business logic error to http exceptions
-      // https://stackoverflow.com/questions/51112952/what-is-the-nestjs-error-handling-approach-business-logic-error-vs-http-error
+    this.logger.verbose(
+      `Created new folder: ${dto.name}, ${dto.parentId}, ${ownerId}`,
+    );
 
-      if (error instanceof FolderDoesNotExistError) {
-        throw new NotFoundException(error.message);
-      }
-
-      if (error instanceof DuplicateFolderError) {
-        throw new BadRequestException(error.message);
-      }
-    }
+    return {
+      data,
+      success: true,
+    };
   }
 }
