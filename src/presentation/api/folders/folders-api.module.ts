@@ -2,7 +2,7 @@ import { DynamicModule } from '@nestjs/common';
 import {
   FoldersController,
   FoldersApiService,
-} from '@presentation/api/folders';
+} from '@/presentation/api/folders';
 
 export class FoldersApiModule {
   public static forRoot(): DynamicModule {
